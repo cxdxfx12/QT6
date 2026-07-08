@@ -88,11 +88,13 @@ void GlobalRulesDialog::setupUI()
         << QStringLiteral("结束时间") << QStringLiteral("加价数值")
         << QStringLiteral("类型") << QStringLiteral("启用"));
     m_activityTable->horizontalHeader()->setStretchLastSection(false);
-    m_activityTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-    m_activityTable->setColumnWidth(1, 150);
-    m_activityTable->setColumnWidth(2, 150);
-    m_activityTable->setColumnWidth(3, 100);
-    m_activityTable->setColumnWidth(4, 100);
+    m_activityTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
+    m_activityTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    m_activityTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    m_activityTable->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+    m_activityTable->horizontalHeader()->setSectionResizeMode(4, QHeaderView::Stretch);
+    m_activityTable->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Fixed);
+    m_activityTable->setColumnWidth(0, 150);
     m_activityTable->setColumnWidth(5, 60);
     m_activityTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_activityTable->setAlternatingRowColors(true);
@@ -130,11 +132,13 @@ void GlobalRulesDialog::setupUI()
         << QStringLiteral("结束时间") << QStringLiteral("加价金额/比例")
         << QStringLiteral("类型") << QStringLiteral("启用"));
     m_tempIncreaseTable->horizontalHeader()->setStretchLastSection(false);
-    m_tempIncreaseTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-    m_tempIncreaseTable->setColumnWidth(1, 150);
-    m_tempIncreaseTable->setColumnWidth(2, 150);
-    m_tempIncreaseTable->setColumnWidth(3, 120);
-    m_tempIncreaseTable->setColumnWidth(4, 100);
+    m_tempIncreaseTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
+    m_tempIncreaseTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    m_tempIncreaseTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    m_tempIncreaseTable->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+    m_tempIncreaseTable->horizontalHeader()->setSectionResizeMode(4, QHeaderView::Stretch);
+    m_tempIncreaseTable->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Fixed);
+    m_tempIncreaseTable->setColumnWidth(0, 150);
     m_tempIncreaseTable->setColumnWidth(5, 60);
     m_tempIncreaseTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_tempIncreaseTable->setAlternatingRowColors(true);
