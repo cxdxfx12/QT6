@@ -87,7 +87,13 @@ void GlobalRulesDialog::setupUI()
         << QStringLiteral("名称") << QStringLiteral("开始时间")
         << QStringLiteral("结束时间") << QStringLiteral("加价数值")
         << QStringLiteral("类型") << QStringLiteral("启用"));
-    m_activityTable->horizontalHeader()->setStretchLastSection(true);
+    m_activityTable->horizontalHeader()->setStretchLastSection(false);
+    m_activityTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    m_activityTable->setColumnWidth(1, 150);
+    m_activityTable->setColumnWidth(2, 150);
+    m_activityTable->setColumnWidth(3, 100);
+    m_activityTable->setColumnWidth(4, 100);
+    m_activityTable->setColumnWidth(5, 60);
     m_activityTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_activityTable->setAlternatingRowColors(true);
     m_activityTable->setSortingEnabled(false);
@@ -123,7 +129,13 @@ void GlobalRulesDialog::setupUI()
         << QStringLiteral("名称") << QStringLiteral("开始时间")
         << QStringLiteral("结束时间") << QStringLiteral("加价金额/比例")
         << QStringLiteral("类型") << QStringLiteral("启用"));
-    m_tempIncreaseTable->horizontalHeader()->setStretchLastSection(true);
+    m_tempIncreaseTable->horizontalHeader()->setStretchLastSection(false);
+    m_tempIncreaseTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    m_tempIncreaseTable->setColumnWidth(1, 150);
+    m_tempIncreaseTable->setColumnWidth(2, 150);
+    m_tempIncreaseTable->setColumnWidth(3, 120);
+    m_tempIncreaseTable->setColumnWidth(4, 100);
+    m_tempIncreaseTable->setColumnWidth(5, 60);
     m_tempIncreaseTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_tempIncreaseTable->setAlternatingRowColors(true);
     m_tempIncreaseTable->setSortingEnabled(false);
@@ -157,7 +169,10 @@ void GlobalRulesDialog::setupUI()
     m_provinceIncreaseTable = new QTableWidget(0, 3, provinceTab);
     m_provinceIncreaseTable->setHorizontalHeaderLabels(QStringList()
         << QStringLiteral("省份") << QStringLiteral("加价金额") << QStringLiteral("启用"));
-    m_provinceIncreaseTable->horizontalHeader()->setStretchLastSection(true);
+    m_provinceIncreaseTable->horizontalHeader()->setStretchLastSection(false);
+    m_provinceIncreaseTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    m_provinceIncreaseTable->setColumnWidth(1, 100);
+    m_provinceIncreaseTable->setColumnWidth(2, 60);
     m_provinceIncreaseTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_provinceIncreaseTable->setAlternatingRowColors(true);
     m_provinceIncreaseTable->setSortingEnabled(false);
