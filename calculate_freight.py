@@ -118,17 +118,18 @@ def calculate_freight(weight, province):
     
     for rule in rules:
         if rule["type"] == "fixed":
-            # 固定价格段
-            if weight >= rule["min"] and (rule["max"] == -1 or weight < rule["max"]):
+            # 固定价格段（左开右闭，与C++ isWeightInRange一致）
+            if weight > rule["min"] and (rule["max"] == -1 or weight <= rule["max"]):
                 return rule["price"]
         else:
-            # 标准计算：首重 + 续重
-            if weight >= rule["min"] and (rule["max"] == -1 or weight < rule["max"]):
+            # 标准计算：首重 + 续重（续重按比例，不取整，与C++一致）
+            if weight > rule["min"] and (rule["max"] == -1 or weight <= rule["max"]):
                 if weight <= rule["min"]:
                     return rule["first"]
                 extra_weight = weight - rule["min"]
-                extra_kg = math.ceil(extra_weight)
-                return rule["first"] + extra_kg * rule["add"]
+                if extra_weight < 0:
+                    extra_weight = 0
+                return rule["first"] + extra_weight * rule["add"]
     
     # 未匹配到规则
     return 0

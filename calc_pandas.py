@@ -119,16 +119,17 @@ def calculate_freight_single(weight, province):
     rules = PRICE_RULES.get(region, PRICE_RULES["一区"])
     
     for rule in rules:
-        if weight >= rule["min"] and (rule["max"] == -1 or weight < rule["max"]):
+        if weight > rule["min"] and (rule["max"] == -1 or weight <= rule["max"]):
             if rule["type"] == "fixed":
                 return rule["price"]
             else:
-                # 标准计算：首重 + 续重
+                # 标准计算：首重 + 续重（续重按比例，不取整，与C++一致）
                 if weight <= rule["min"]:
                     return rule["first"]
                 extra_weight = weight - rule["min"]
-                extra_kg = math.ceil(extra_weight)
-                return rule["first"] + extra_kg * rule["add"]
+                if extra_weight < 0:
+                    extra_weight = 0
+                return rule["first"] + extra_weight * rule["add"]
     
     return 0
 

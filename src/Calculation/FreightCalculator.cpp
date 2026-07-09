@@ -29,12 +29,10 @@ QString FreightCalculator::normalizeProvince(const QString &province)
     return s.trimmed();
 }
 
-// 两字前缀模糊匹配: 规范化后若前两字相同则视为匹配
+// 两字前缀模糊匹配：前两字相同则视为匹配
+// 注意：调用前已通过第一轮精确匹配和第二轮contains匹配，此函数仅做前缀匹配
 static bool fuzzyProvinceMatch(const QString &a, const QString &b)
 {
-    if (a == b) return true;
-    if (a.contains(b) || b.contains(a)) return true;
-    // 两字前缀匹配
     if (a.size() >= 2 && b.size() >= 2 && a.left(2) == b.left(2)) return true;
     return false;
 }
@@ -181,7 +179,7 @@ double FreightCalculator::calculateFreightDetail(const OrderData &order, const C
         ruleProv = ruleProv.trimmed();
         if (ruleProv == normOrderProv || ppi.province == order.destinationProvince) {
             ruleDesc += QStringLiteral("+省份加价");
-            break;
+            // 不 break：与活动加价/临时加价描述方式一致
         }
     }
 

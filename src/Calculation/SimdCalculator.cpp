@@ -576,10 +576,8 @@ int SimdCalculator::calculateChunk(
     QHash<QString, int> customIdx = buildProvinceIndex(rule.customPriceRules);
     QHash<QString, int> defaultIdx = buildProvinceIndex(defaultTable);
 
-    // 辅助: 两字前缀模糊匹配
+    // 辅助: 两字前缀模糊匹配（此前已通过哈希精确匹配和contains模糊匹配）
     auto fuzzyMatch = [](const QString &a, const QString &b) -> bool {
-        if (a == b) return true;
-        if (a.contains(b) || b.contains(a)) return true;
         if (a.size() >= 2 && b.size() >= 2 && a.left(2) == b.left(2)) return true;
         return false;
     };
@@ -719,12 +717,15 @@ int SimdCalculator::calculateChunk(
 
         const WeightSegment& seg = pr->segments[segmentIdx[sampleIdx]];
 
-        // 计算全续模式下的最低收费：取所有段的最大首重价（防止价格倒挂）
+        // 计算全续模式下的最低收费：取匹配段及之前所有段的最大首重价（防止价格倒挂）
+        // 只遍历到匹配段（含），与标量路径 CalculationRule::calculateFullAdditional 行为一致
         double minFullAdditionalPrice = 0;
         if (mode == CalculationRule::Mode::FullAdditional || seg.isFullAdditional) {
-            for (const WeightSegment& s : pr->segments) {
-                if (s.firstWeightPrice > minFullAdditionalPrice) {
-                    minFullAdditionalPrice = s.firstWeightPrice;
+            int matchSegIdx = segmentIdx[sampleIdx];
+            for (int s = 0; s <= matchSegIdx && s < pr->segments.size(); ++s) {
+                double fp = pr->segments[s].firstWeightPrice;
+                if (fp > minFullAdditionalPrice) {
+                    minFullAdditionalPrice = fp;
                 }
             }
         }
@@ -905,7 +906,7 @@ int SimdCalculator::calculateChunk(
             if (ruleProv == normOrderProv || ppi.province == orders[i].destinationProvince) {
                 ruleDesc += QStringLiteral("+省份加价");
                 freight += ppi.increaseAmount;
-                break;
+                // 不 break：与标量路径 applyProvincePriceIncrease 一致，允许多条省份加价规则叠加
             }
         }
 
